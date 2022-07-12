@@ -18,6 +18,10 @@ public class Node : MonoBehaviour {
             //lr.StartColor(Color.white);
         }
 
+        public Edge(GameObject go, bool none){
+            obj = go;
+        }
+
         public LineRenderer getLineRenderer(){
             return lr;
         }
@@ -29,6 +33,7 @@ public class Node : MonoBehaviour {
     }
 
     List<Edge> edges = new List<Edge>();
+    public string name { get; set; }
     [SerializeField] TMP_Text nodeName;
 
     void Update(){
@@ -38,16 +43,29 @@ public class Node : MonoBehaviour {
     }
 
     public void setName(string name){
+        this.name = name;
         nodeName.text = name;
     }
 
-    public void addEdge(Node node){
+    public void addEdge(Node node, int weight){
         SpringJoint spring = this.gameObject.AddComponent<SpringJoint>();
         spring.autoConfigureConnectedAnchor = false;
         spring.connectedAnchor = Vector3.zero;
         spring.enableCollision = true;
         spring.connectedBody = node.GetComponent<Rigidbody>();
+        spring.spring = weight;
         Edge edge = new Edge(node.gameObject);
+        edges.Add(edge);
+    }
+
+    public void addEdgeMain(Node node){
+        SpringJoint spring = this.gameObject.AddComponent<SpringJoint>();
+        spring.autoConfigureConnectedAnchor = false;
+        spring.connectedAnchor = Vector3.zero;
+        spring.enableCollision = true;
+        spring.connectedBody = node.GetComponent<Rigidbody>();
+        spring.spring = 5000;
+        Edge edge = new Edge(node.gameObject, false);
         edges.Add(edge);
     }
 }
