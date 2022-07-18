@@ -8,6 +8,7 @@ public class Graph : MonoBehaviour {
 	public GameObject nodePrefab;
 	public Node cylinder;
 	public float size;
+	public Gradient weightGradient;
 
 	// Algorithm for generating a random graph
 	/*

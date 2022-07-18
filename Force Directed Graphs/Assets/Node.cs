@@ -22,10 +22,9 @@ public class Node : MonoBehaviour {
     }
 
     void FixedUpdate(){
-        /*
         foreach(Edge edge in edges){
             edge.setLinePosition(this.transform.position);
-        }*/
+        }
     }
 
     public void addEdge(Node node, int weight){

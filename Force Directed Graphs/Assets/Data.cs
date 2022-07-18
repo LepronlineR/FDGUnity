@@ -28,4 +28,21 @@ public class Data {
         return data.Count;
     }
 
+    public Pair<int, int> evaluateMinMaxWeights(){
+        int save = 0;
+        foreach(string str in fields){
+            if(str.Equals("weights")){
+                break;
+            }
+            save += 1;
+        }
+        int max = int.MaxValue;
+        int min = data[0][save];
+        foreach(string[] line in data){
+            foreach(string str in line[save]){
+                
+            }
+        }
+    }
+
 }
