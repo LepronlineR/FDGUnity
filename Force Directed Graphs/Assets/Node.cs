@@ -5,36 +5,18 @@ using TMPro;
 
 public class Node : MonoBehaviour {
 
-    public class Edge : MonoBehaviour {
+    NodeData nodeData;
+    [SerializeField] TMP_Text nodeName;
+    List<Edge> edges = new List<Edge>();
 
-        private GameObject obj;
-        private LineRenderer lr;
-
-        public Edge(GameObject go){
-            obj = go;
-            lr = new GameObject().AddComponent<LineRenderer>();
-            lr.gameObject.transform.SetParent(obj.transform, false);
-            lr.gameObject.transform.SetPositionAndRotation(Vector3.zero, Quaternion.identity);
-            //lr.StartColor(Color.white);
-        }
-
-        public Edge(GameObject go, bool none){
-            obj = go;
-        }
-
-        public LineRenderer getLineRenderer(){
-            return lr;
-        }
-
-        public void setLinePosition(Vector3 pos){
-            lr.SetPosition(0, obj.transform.position);
-            lr.SetPosition(1, pos);
-        }
+    public NodeData Data {
+        get { return nodeData; }
+        set { nodeData = value; }
     }
 
-    List<Edge> edges = new List<Edge>();
-    public string name { get; set; }
-    [SerializeField] TMP_Text nodeName;
+    public void setName(){
+        nodeName.text = nodeData.Name;
+    }
 
     void Update(){
         foreach(Edge edge in edges){
@@ -42,12 +24,10 @@ public class Node : MonoBehaviour {
         }
     }
 
-    public void setName(string name){
-        this.name = name;
-        nodeName.text = name;
-    }
-
     public void addEdge(Node node, int weight){
+        if(node.gameObject == null){
+            Debug.Log("ERROR: node is NULL for " + node.Data.Name);
+        }
         SpringJoint spring = this.gameObject.AddComponent<SpringJoint>();
         spring.autoConfigureConnectedAnchor = false;
         spring.connectedAnchor = Vector3.zero;
