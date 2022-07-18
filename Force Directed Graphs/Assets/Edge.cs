@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Edge : MonoBehaviour {
+public class Edge {
 
     private GameObject obj;
     private LineRenderer lr;

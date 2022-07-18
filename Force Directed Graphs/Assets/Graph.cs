@@ -92,6 +92,7 @@ public class Graph : MonoBehaviour {
 			obj.transform.parent = transform;
 			obj.GetComponent<Node>().Data = data.Value;
 			obj.GetComponent<Node>().setName();
+			obj.GetComponent<Node>().gameObj = obj;
 			nodes.Add(data.Value, obj.GetComponent<Node>());
 		}
 		// set the edges based on each node

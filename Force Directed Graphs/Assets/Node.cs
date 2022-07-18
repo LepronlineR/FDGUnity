@@ -9,6 +9,9 @@ public class Node : MonoBehaviour {
     [SerializeField] TMP_Text nodeName;
     List<Edge> edges = new List<Edge>();
 
+    // represents the GO/Transform that holds Node
+    public GameObject gameObj { get; set; }
+
     public NodeData Data {
         get { return nodeData; }
         set { nodeData = value; }
@@ -18,16 +21,14 @@ public class Node : MonoBehaviour {
         nodeName.text = nodeData.Name;
     }
 
-    void Update(){
+    void FixedUpdate(){
+        /*
         foreach(Edge edge in edges){
             edge.setLinePosition(this.transform.position);
-        }
+        }*/
     }
 
     public void addEdge(Node node, int weight){
-        if(node.gameObject == null){
-            Debug.Log("ERROR: node is NULL for " + node.Data.Name);
-        }
         SpringJoint spring = this.gameObject.AddComponent<SpringJoint>();
         spring.autoConfigureConnectedAnchor = false;
         spring.connectedAnchor = Vector3.zero;
