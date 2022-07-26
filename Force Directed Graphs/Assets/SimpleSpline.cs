@@ -25,7 +25,7 @@ public class SimpleSpline : MonoBehaviour
 
     void Start() {
         incrementAmount = 1.0f/vertices;
-        arr = new Vector3[vertices+1];
+        arr = new Vector3[vertices + 1];
         //p2.transform.position = (p1.position + p3.position)/2;
         p2.transform.position = Vector3.zero;
         // make this transform closer to the circle
@@ -34,14 +34,17 @@ public class SimpleSpline : MonoBehaviour
 
     // Update is called once per frame
     void FixedUpdate() {
-        int count = 0;
+        //p2.transform.position = Vector3.zero;
+        p2.transform.position = (p1.transform.position + p3.transform.position)/2;
+        p2.transform.position = (Vector3.zero + p2.transform.position)/1.5f;
         if(p1 != null && p2 != null && p3 != null){
-            for(float x = 0.0f; x <= 1.0f; x += incrementAmount){
-                arr[count] = Vector3.Lerp(
-                    Vector3.Lerp(p1.transform.position, p2.transform.position, x), 
-                    Vector3.Lerp(p2.transform.position, p3.transform.position, x), 
-                    x);
-                count++;
+            float count = 0.0f;
+            for(int x = 0; x <= vertices; x++){
+                arr[x] = Vector3.Lerp(
+                    Vector3.Lerp(p1.transform.position, p2.transform.position, count), 
+                    Vector3.Lerp(p2.transform.position, p3.transform.position, count), 
+                    count);
+                count += incrementAmount;
             }
             lr.positionCount = vertices;
             lr.SetPositions(arr);
