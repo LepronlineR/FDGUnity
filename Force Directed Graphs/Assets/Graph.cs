@@ -9,6 +9,7 @@ public class Graph : MonoBehaviour {
 	public Node cylinder;
 	public float size;
 	public Gradient weightGradient;
+	[SerializeField] Material defaultLRMaterial;
 
 	// Algorithm for generating a random graph
 	/*
@@ -50,14 +51,21 @@ public class Graph : MonoBehaviour {
 			NodeData node = new NodeData();
 			node.ID = line[0];
 			node.Name = line[1];
-			// set the node's color to default
-			node.COLOR = Color.green;
+			// set the node's color to random
+			node.COLOR = Random.ColorHSV(0f, 1f, 1f, 1f, 0.5f, 1f);
 			result.Add(node.ID, node);
 		}
 		// set the edges
 		/*		From the example
 				Source,				Target,			Type,		id,			weight
 				Addam-Marbrand,		Brynden-Tully,	Undirected,	0,			3
+		*/
+		/*
+			Person -> One
+			search for Person 
+			NodeData:
+
+			Person ID: Person-Person, List<EdgeData> = [One];
 		*/
 		foreach(string[] line in edges.data){
 			NodeData source;
@@ -88,13 +96,20 @@ public class Graph : MonoBehaviour {
 	void generateGraphFromNodeData(Dictionary<string, NodeData> nodeData){
 		Dictionary<NodeData, Node> nodes = new Dictionary<NodeData, Node>();
 		// generate the nodes
+		int count = 5;
 		foreach(KeyValuePair<string, NodeData> data in nodeData){
 			GameObject obj = (GameObject) Instantiate(nodePrefab, new Vector3(Random.Range(-size, size), 0.0f, Random.Range(-size, size)), Quaternion.identity);
+			obj.name = data.Key;
 			obj.transform.parent = transform;
 			obj.GetComponent<Node>().Data = data.Value;
-			obj.GetComponent<Node>().setName();
 			obj.GetComponent<Node>().gameObj = obj;
 			nodes.Add(data.Value, obj.GetComponent<Node>());
+			if(count > 0){
+				obj.GetComponent<Node>().setName();
+				obj.GetComponent<Node>().setColor();
+				obj.GetComponent<Node>().show = true;
+			}
+			count--;
 		}
 		// set the edges based on each node
 		foreach(KeyValuePair<NodeData, Node> node in nodes){
@@ -104,7 +119,7 @@ public class Graph : MonoBehaviour {
 				Node recievingNode;
 				if(nodes.TryGetValue(target, out recievingNode)){
 					// add the edge
-					node.Value.addEdge(recievingNode, edge.Weight);
+					node.Value.addEdge(recievingNode, edge.Weight, node.Value.getName() + " (Edge)", defaultLRMaterial);
 				} else {
 					Debug.Log("[generateGraphFromNodeData()] Target: " + target.ID + " has not been found.");
 				}

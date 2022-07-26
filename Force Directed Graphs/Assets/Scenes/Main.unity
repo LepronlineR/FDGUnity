@@ -247,10 +247,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   nodePrefab: {fileID: 7951427308547965109, guid: fcd83c84fae2df6beaf502d54769efad, type: 3}
   cylinder: {fileID: 1429689304}
-  size: 100
+  size: 50
   weightGradient:
     serializedVersion: 2
-    key0: {r: 0.24528301, g: 0.24528301, b: 0.24528301, a: 1}
+    key0: {r: 1, g: 1, b: 1, a: 1}
     key1: {r: 1, g: 1, b: 1, a: 1}
     key2: {r: 0, g: 0, b: 0, a: 0}
     key3: {r: 0, g: 0, b: 0, a: 0}
@@ -277,6 +277,7 @@ MonoBehaviour:
     m_Mode: 0
     m_NumColorKeys: 2
     m_NumAlphaKeys: 2
+  defaultLRMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
 --- !u!4 &225226731
 Transform:
   m_ObjectHideFlags: 0
@@ -611,6 +612,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   nodeName: {fileID: 1699679696}
+  show: 0
 --- !u!1 &1699679695
 GameObject:
   m_ObjectHideFlags: 0

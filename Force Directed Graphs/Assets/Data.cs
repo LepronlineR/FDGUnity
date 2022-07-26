@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public class Data {
 
@@ -28,7 +29,7 @@ public class Data {
         return data.Count;
     }
 
-    public Pair<int, int> evaluateMinMaxWeights(){
+    public (int, int) evaluateMinMaxWeights(){
         int save = 0;
         foreach(string str in fields){
             if(str.Equals("weights")){
@@ -36,13 +37,19 @@ public class Data {
             }
             save += 1;
         }
-        int max = int.MaxValue;
-        int min = data[0][save];
+        int max = int.MinValue;
+        int min = Int32.Parse(data[0][save]);
         foreach(string[] line in data){
-            foreach(string str in line[save]){
-                
+            foreach(string str in line){
+                int temp = Int32.Parse(str);
+                if(temp > max){
+                    max = temp;
+                } else if(temp < min){
+                    min = temp;
+                }
             }
         }
+        return (min, max);
     }
 
 }
