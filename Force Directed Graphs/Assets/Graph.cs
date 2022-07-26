@@ -8,7 +8,7 @@ public class Graph : MonoBehaviour {
 	public GameObject nodePrefab;
 	public Node cylinder;
 	public float size;
-	public Gradient weightGradient;
+	//public Gradient weightGradient;
 	[SerializeField] Material defaultLRMaterial;
 
 	// Algorithm for generating a random graph
@@ -96,7 +96,7 @@ public class Graph : MonoBehaviour {
 	void generateGraphFromNodeData(Dictionary<string, NodeData> nodeData){
 		Dictionary<NodeData, Node> nodes = new Dictionary<NodeData, Node>();
 		// generate the nodes
-		int count = 5;
+		int count = 99999999;
 		foreach(KeyValuePair<string, NodeData> data in nodeData){
 			GameObject obj = (GameObject) Instantiate(nodePrefab, new Vector3(Random.Range(-size, size), 0.0f, Random.Range(-size, size)), Quaternion.identity);
 			obj.name = data.Key;
@@ -127,18 +127,22 @@ public class Graph : MonoBehaviour {
 			node.Value.addEdgeMain(cylinder);
 		}
 	}
-  
-    void Start(){
-		CSVParser csvparser = new CSVParser();
-		Data edges = csvparser.parseCSVPath("/data/asoiaf-master/data/asoiaf-all-edges.csv");
-		Data nodes = csvparser.parseCSVPath("/data/asoiaf-master/data/asoiaf-all-nodes.csv");
+
+	private CSVParser csvparser;
+	[SerializeField] string edgePath = "/data/asoiaf-master/data/asoiaf-book1-edges.csv";
+	[SerializeField] string nodePath = "/data/asoiaf-master/data/asoiaf-book1-nodes.csv";
+
+	public void generateGraph(){
+		// "/data/asoiaf-master/data/asoiaf-book1-edges.csv"
+		// "/data/asoiaf-master/data/asoiaf-book1-nodes.csv"
+		Data edges = csvparser.parseCSVPath(edgePath);
+		Data nodes = csvparser.parseCSVPath(nodePath);
 		Dictionary<string, NodeData> data = generateNodeDataFromCSV(nodes, edges);
 		generateGraphFromNodeData(data);
-		//d.printList();
-		//int amount = 19;
-		//GenerateRandomGraph(amount, 0.2f);
-		//string[] dataset = System.IO.File.ReadAllLines(path);
-		//var result = CSVParser.parseCSV(dataset.Split('\n'));
+	}
+  
+    void Start(){
+		csvparser = new CSVParser();
 	}
     
 }

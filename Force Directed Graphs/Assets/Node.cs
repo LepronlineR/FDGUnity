@@ -34,15 +34,16 @@ public class Node : MonoBehaviour {
 
     void Update() {
         this.transform.LookAt(vec);
-        setColor();
+        //setColor();
     }
 
     void FixedUpdate(){
+        /*
         if(show){
             foreach(Edge edge in edges){
                 edge.setLinePosition(this.transform.position);
             }
-        }
+        }*/
     }
 
 
@@ -53,7 +54,7 @@ public class Node : MonoBehaviour {
         spring.enableCollision = true;
         spring.connectedBody = node.GetComponent<Rigidbody>();
         spring.spring = weight;
-        Edge edge = new Edge(node.gameObject, name, mat);
+        Edge edge = new Edge(this.gameObject, node.gameObject, name, mat);
         edges.Add(edge);
     }
 
